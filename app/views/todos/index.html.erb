@@ -4,8 +4,6 @@
   </div>
 <% end %>
 
-<h1>Task List</h1>
-
 <div class="task-container">
   <div class="item">
     <h1>タスク一覧</h1>
@@ -17,7 +15,9 @@
         <%# 残り日数を計算 %>
         残り:<%= (t.time - @today).to_i %>日</br>
         <%# タスク完了ボタン %>
-        <%= button_to 'Done', done_path(t.id), method: :post %></br></br> 
+        <%= button_to '完了', done_path(t.id), method: :post %>
+        <%= link_to '編集', edit_todo_path(t.id) %>
+        <%= link_to '削除', todo_path(t.id), data: {turbo_method: :delete} %></br> 
       <% else %>
         <%# #期限が切れているタスクの表示 %>
         <b><%= t.task %></b></br>
@@ -25,7 +25,9 @@
         <%# #何日期限超過かを計算 %>
         <%= (t.time - @today).to_i * -1 %>日期限が超過しています⚠️</br>
         <%# #タスク完了ボタン %>
-        <%= button_to 'Done', done_path(t.id), method: :post %></br></br>
+        <%= button_to '完了', done_path(t.id), method: :post %>
+        <%= link_to '編集', edit_todo_path(t.id) %>
+        <%= link_to '削除', todo_path(t.id), data: {turbo_method: :delete} %></br>
       <% end %>
       </div>
     <% end %>
@@ -42,6 +44,6 @@
   </div>
 </div>
 
-<%= link_to(new_todo_path, class: 'purchase-btn') do %>
-  <span class='purchase-btn-text'>Add Task</span>
+<%= link_to(new_todo_path, class: 'add-task-btn') do %>
+  <span class='add-task-btn-text'>タスクを追加する</span>
 <% end %>

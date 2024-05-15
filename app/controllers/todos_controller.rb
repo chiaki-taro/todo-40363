@@ -1,6 +1,6 @@
 class TodosController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_task, only: [:done]
+  before_action :set_task, only: [:edit, :update, :done, :destroy]
 
   def index
     @today = Date.today #今日の日付
@@ -18,6 +18,28 @@ class TodosController < ApplicationController
       redirect_to root_path
     else
       render :new, status: :unprocessable_entity
+    end
+  end
+
+  def edit
+    return unless @task.user_id != current_user.id
+    redirect_to root_path
+  end
+
+  def update
+    if @task.update(task_params)
+      redirect_to root_path
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if @task.user_id == current_user.id
+      @task.destroy
+      redirect_to root_path
+    else
+      redirect_to root_path
     end
   end
 

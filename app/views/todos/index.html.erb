@@ -1,15 +1,13 @@
-<h1>タスクリスト</h1>
-
-<%= form_with model: @task, local: true do |f| %>
-    <%= f.label :タスク名 %>
-    <%= f.text_field :task, :size => 40 %></br>
-    <%= f.label :締切 %>
-    <%= f.date_field :time, :size => 140 %>
-    <%= f.submit "追加する" %>
+<% if user_signed_in? %>
+  <div class="user_nav grid-6">
+    <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete } %>
+  </div>
 <% end %>
 
-<div class="task-container"%>
-  <div class="item"%>
+<h1>Task List</h1>
+
+<div class="task-container">
+  <div class="item">
     <h1>タスク一覧</h1>
     <% @tasks.each do |t| %> 
       <div class="task">
@@ -22,7 +20,7 @@
         <%= button_to 'Done', done_path(t.id), method: :post %></br></br> 
       <% else %>
         <%# #期限が切れているタスクの表示 %>
-        <b><%= t.title %></b></br>
+        <b><%= t.task %></b></br>
         締切:<%= t.time %></br>
         <%# #何日期限超過かを計算 %>
         <%= (t.time - @today).to_i * -1 %>日期限が超過しています⚠️</br>
@@ -43,3 +41,7 @@
     <% end %>
   </div>
 </div>
+
+<%= link_to(new_todo_path, class: 'purchase-btn') do %>
+  <span class='purchase-btn-text'>Add Task</span>
+<% end %>

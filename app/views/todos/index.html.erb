@@ -1,0 +1,45 @@
+<h1>タスクリスト</h1>
+
+<%= form_with model: @task, local: true do |f| %>
+    <%= f.label :タスク名 %>
+    <%= f.text_field :task, :size => 40 %></br>
+    <%= f.label :締切 %>
+    <%= f.date_field :time, :size => 140 %>
+    <%= f.submit "追加する" %>
+<% end %>
+
+<div class="task-container"%>
+  <div class="item"%>
+    <h1>タスク一覧</h1>
+    <% @tasks.each do |t| %> 
+      <div class="task">
+      <% if (t.time - @today).to_i > -1 %>
+        タスク名:<b><%= t.task %></b></br>
+        締切:<%= t.time %></br>
+        <%# 残り日数を計算 %>
+        残り:<%= (t.time - @today).to_i %>日</br>
+        <%# タスク完了ボタン %>
+        <%= button_to 'Done', done_path(t.id), method: :post %></br></br> 
+      <% else %>
+        <%# #期限が切れているタスクの表示 %>
+        <b><%= t.title %></b></br>
+        締切:<%= t.time %></br>
+        <%# #何日期限超過かを計算 %>
+        <%= (t.time - @today).to_i * -1 %>日期限が超過しています⚠️</br>
+        <%# #タスク完了ボタン %>
+        <%= button_to 'Done', done_path(t.id), method: :post %></br></br>
+      <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="item">
+  <h1>完了したタスク</h1>
+    <% @tasks_done.each do |t| %>
+      <div class="task">
+        タスク名:<b><%= t.task %></b></br>
+        <%# #完了日の表示 %>
+        完了日:<%= t.done_at.strftime('%Y-%m-%d') %> </br></br> 
+      </div>
+    <% end %>
+  </div>
+</div>

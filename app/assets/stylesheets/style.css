@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+}
+
+.header {
+  background-color: deepskyblue;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.header__name {
+  margin: 10px auto 10px 10px;
+  color: aliceblue;
+  text-decoration: none;
+}
+
+.logout {
+  margin: auto 10px auto auto;
+  width: fit-content;
+}
+.logout__link {
+  color: aliceblue;
+  text-decoration: none;
+}
+
+.footer {
+  background-color: deepskyblue;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  left: 0
+}
+
+.footer__text {
+  color: aliceblue;
+}
